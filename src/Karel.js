@@ -11,7 +11,7 @@ const C = class {
         this.set(this.x + x, this.y = this.y + y)
     }
     equal(c) {
-        return this.x = c.x && this.y == c.y
+        return this.x == c.x && this.y == c.y
     }
 
 }
