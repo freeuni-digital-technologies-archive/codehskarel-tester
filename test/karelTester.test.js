@@ -1,12 +1,13 @@
 const { expect } = require('chai')
 
 const tester = require('../src/karelTester')
-const { World, C } = require('../src/Karel')
 describe('read file and check if it works correctly', () => {
-    it('move and pick beeper', () => {
-        const world = new World({})
-        world.addBeepers(new C(1,1))
-        tester.testFile('../test/files/integration.k', world)
-        expect(world.beepers.length).equal(0)        
+    it('one test should run and it should pass', async () => {
+        const testFile = 'test/files/testCase.js'
+        const res = await tester
+            .testFile(testFile)
+        const passedCount = res.filter(e => e.state == 'passed').length
+        expect(passedCount).equal(1)
+        expect(res.length).equal(1)
     })
 })

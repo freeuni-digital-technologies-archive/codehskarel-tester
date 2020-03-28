@@ -4,7 +4,6 @@ function turnRight() {
     turnLeft()
 }
 function main() {
-    move()
     turnLeft()
     move()
     turnRight()
