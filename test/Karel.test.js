@@ -44,4 +44,8 @@ describe('beepers', () => {
         world.addBeepers([new C(1,1), new C(1,1)])
         expect(world.beepers.length).equal(2)
     })
+    it('world with empty beepers', () => {
+        const world = new World({})
+        expect(world.beepers.length).equal(0)
+    })
 })
