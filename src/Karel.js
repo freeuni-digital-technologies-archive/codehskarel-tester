@@ -56,10 +56,10 @@ const World = class {
 module.exports.C = C
 module.exports.World = World
 module.exports.Karel = class {
-    constructor(world) {
-        this.world = world
-        this.direction = 0
-        this.position = new C(0, 0)
+    constructor(opts) {
+        this.world = opts.world || opts // default
+        this.direction = opts.direction || 0
+        this.position = opts.position || new C(0, 0)
     }
     setPosition(x, y) {
         this.position.set(x, y)

@@ -1,7 +1,7 @@
 const { expect } = require('chai')
 const { Karel, World, C } = require('../src/Karel')
 describe('karel movement', () => {
-    const karel = new Karel()
+    const karel = new Karel({})
     it('moving once', () => {
         karel.move()
         expect(karel.position).eql(new C(1, 0))
@@ -33,6 +33,7 @@ describe('beepers', () => {
         karel.move()
         karel.pickBeeper()
         expect(world.beepers.length).equal(0)
+        expect(karel.position).eql(new C(1, 0))
     })
     it('throw error if there is no beeper', () => {
         expect(() => karel.pickBeeper()).to.throw("no beepers")
