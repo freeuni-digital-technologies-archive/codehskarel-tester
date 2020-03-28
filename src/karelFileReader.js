@@ -5,5 +5,8 @@ module.exports.getMainFunction = (fileName, object) => {
     const submission = rewire(fileName)
     const main = submission.__get__('main')
     submission.__set__('move', () => object.move())
+    submission.__set__('turnLeft', () => object.turnLeft())
+    submission.__set__('pickBeeper', () => object.pickBeeper())
+    submission.__set__('putBeeper', () => object.putBeeper())
     return main
 } 
