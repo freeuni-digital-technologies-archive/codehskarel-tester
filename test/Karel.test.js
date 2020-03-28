@@ -6,10 +6,15 @@ describe('karel movement', () => {
         karel.move()
         expect(karel.position).eql(new C(1, 0))
     })
-    it('change direcion and move', () => {
+    it('change direction and move', () => {
         karel.turnLeft()
         karel.move()
         expect(karel.position).eql(new C(1, 1))
+        karel.turnLeft()
+        karel.turnLeft()
+        karel.turnLeft()
+        karel.move()
+        expect(karel.position).eql(new C(2,1))
     })
 
     it('position change', () => {

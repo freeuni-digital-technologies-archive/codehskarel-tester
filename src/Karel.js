@@ -20,7 +20,7 @@ const C = class {
 const Directions = [
     [1, 0], // east
     [0, 1], // north
-    [-1,], // west
+    [-1, 0], // west
     [0, -1], // south
 ]
 
@@ -66,7 +66,7 @@ module.exports.Karel = class {
         return this
     }
     turnLeft() {
-        this.direction = (this.direction + 1) % (Directions.length - 1)
+        this.direction = (this.direction + 1) % (Directions.length )
     }
     move() {
         const direction = Directions[this.direction]
