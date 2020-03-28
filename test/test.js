@@ -10,7 +10,7 @@ const TestClass = class {
     }
 }
 describe('read the file and extract non exported function', () => {
-    it('console log should be called twice', () => {
+    it('add move function', () => {
         const testClass = new TestClass()
         // ./test does not work because rewire is called in another dir
         // absolute path from root is better
