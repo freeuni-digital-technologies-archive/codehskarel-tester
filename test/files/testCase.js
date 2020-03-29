@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const fileReader = require('../../src/karelFileReader')
 const { C } = require('../../src/Karel')
 const fileName = '../test/files/integration.k'
-describe.only('integration file', () => {
+describe('integration file', () => {
     const config = {
         world: {
             beepers: [new C(1, 1)]
@@ -11,8 +11,13 @@ describe.only('integration file', () => {
     const { main, world, karel } = fileReader.setUpSubmission(fileName, config)
     main()
     // console.log(karel, world)
-    it('should put beeper and pick up both beepers from 1x1', () => {
+    it('pick all beepers', () => {
         expect(world.beepers.length).equal(0)
+    })
+    it('shoud be on 1x1 when it ends', () => {
         expect(karel.position).eql(new C(1, 1))
+    })
+    it('fail test', () => {
+        expect(karel.position).eql(new C(1, 0))
     })
 })
