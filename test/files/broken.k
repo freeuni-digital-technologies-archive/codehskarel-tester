@@ -1,0 +1,8 @@
+/**
+
+**/
+
+functio main() {
+    move()
+    move(
+}
