@@ -36,7 +36,7 @@ describe('beepers', () => {
         expect(karel.position).eql(new C(2, 1))
     })
     it('throw error if there is no beeper', () => {
-        expect(() => karel.pickBeeper()).to.throw("no beepers")
+        expect(() => karel.pickBeeper()).to.throw("no beepers on this corner")
     })
     it('add beepers', () => {
         karel.putBeeper()
@@ -70,7 +70,7 @@ describe('walls', () => {
     it('karel cannot move past walls', () => {
         karel.move()
         karel.move()
-        expect(() => karel.move()).to.throw("hit an edge")
+        expect(() => karel.move()).to.throw("there is a wall in front of Karel")
         expect(karel.position).eql(new C(3,1))
     })
     it('another check for vertical walls', () => {
@@ -78,11 +78,11 @@ describe('walls', () => {
         karel.move()
         karel.move()
         expect(karel.position).eql(new C(3,3))
-        expect(() => karel.move()).to.throw("hit an edge")
+        expect(() => karel.move()).to.throw("there is a wall in front of Karel")
     })
     it('walls can be within the world as well', () => {
         world.addWall(new Wall(new C(3,3), new C(2, 3)))
         karel.turnLeft()
-        expect(() => karel.move()).to.throw("hit an edge")
+        expect(() => karel.move()).to.throw("there is a wall in front of Karel")
     })
 })

@@ -24,7 +24,9 @@ const C = class {
     equal(c) {
         return this.x == c.x && this.y == c.y
     }
-
+    toString() {
+        return `(${this.x},${this.y})`
+    }
 }
 
 const Wall = class {
@@ -131,7 +133,7 @@ const World = class {
         if (index > -1) {
             this.beepers.splice(index, 1)
         } else {
-            throw "no beepers"
+            throw "no beepers on this corner"
         }
     }
 
@@ -162,7 +164,7 @@ module.exports.Karel = class {
     move() {
         const direction = Directions[this.direction]
         if (this.world.existsWall(this.position, this.nextCorner(direction))) {
-            throw "hit an edge"
+            throw "there is a wall in front of Karel"
         } else {
             this.position.move(...direction)
         }
@@ -175,5 +177,8 @@ module.exports.Karel = class {
     }
     putBeeper() {
         this.world.addBeepers(this.position)
+    }
+    toString() {
+        return `Karel is on position ${this.position}, coordinates of beepers: ${this.world.beepers}`
     }
 }
