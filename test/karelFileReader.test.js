@@ -8,6 +8,6 @@ describe('read the file and extract non exported function', () => {
         const submissionFile = '../test/files/simple.k'
         const { main, world, karel } = fileReader.setUpSubmission(submissionFile, {})
         main()
-        expect(karel.position).eql({x: 2, y: 0})
+        expect(karel.position).eql({x: 3, y: 1})
     })
 })

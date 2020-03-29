@@ -5,7 +5,7 @@ const fileName = '../test/files/integration.k'
 describe('integration file', () => {
     const config = {
         world: {
-            beepers: [new C(1, 1)]
+            beepers: [new C(2, 2)]
         }
     }
     const { main, world, karel } = fileReader.setUpSubmission(fileName, config)
@@ -15,9 +15,9 @@ describe('integration file', () => {
         expect(world.beepers.length).equal(0)
     })
     it('shoud be on 1x1 when it ends', () => {
-        expect(karel.position).eql(new C(1, 1))
+        expect(karel.position).eql(new C(2, 2))
     })
     it('fail test', () => {
-        expect(karel.position).eql(new C(1, 0))
+        expect(karel.position).eql(new C(2, 1))
     })
 })

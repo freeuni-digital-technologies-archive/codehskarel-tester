@@ -70,10 +70,10 @@ const Wall = class {
 
     static corners(width, height) {
         return {
-            lowerLeft: [0, 0],
-            lowerRight: [width, 0],
-            topLeft: [0, height],
-            topRight: [width, height]
+            lowerLeft: [1, 1],
+            lowerRight: [width + 1, 1],
+            topLeft: [1, height + 1],
+            topRight: [width + 1, height + 1]
         }
     }
 }
@@ -150,7 +150,7 @@ module.exports.Karel = class {
     constructor(opts) {
         this.world = opts.world || new World({})// default
         this.direction = opts.direction || 0
-        this.position = opts.position || new C(0, 0)
+        this.position = opts.position || new C(1, 1)
     }
     setPosition(x, y) {
         this.position.set(x, y)
