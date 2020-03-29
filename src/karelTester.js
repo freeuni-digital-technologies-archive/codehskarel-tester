@@ -6,7 +6,7 @@ module.exports.testFile = async function (testFile) {
     const results = []
     return new Promise((resolve, reject) => {
         mocha
-            .reporter('Min')
+            // .reporter('min')
             .run()
             .on('pass', test => results.push(test))
             .on('fail', test => results.push(test))
