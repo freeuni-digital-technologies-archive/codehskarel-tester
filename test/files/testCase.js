@@ -1,12 +1,14 @@
 const { expect } = require('chai')
-const fileReader = require('../../src/karelFileReader')
+const root = process.env.jskarelRoot || process.cwd()
+const { C } =require(`${root}/src/Karel`)
+const fileReader = require(`${root}/src/karelFileReader`)
 // const fileName = '../test/files/broken.k'
-const fileName = '../test/files/integration.k'
+const fileName = `${root}/test/files/integration.k`
 
 describe('integration file', () => {
     const config = {
         world: {
-            beepers: [new C(1, 2)]
+            beepers: [new C(2, 2)]
         }
     }
     try {
@@ -21,7 +23,7 @@ describe('integration file', () => {
                 expect(karel.position).eql(new C(2, 2))
             })
             it('fail test', () => {
-                expect(karel.position).eql(new C(2, 1))
+                // expect(karel.position).eql(new C(2, 1))
             })
         } catch (err) {
             it('There is a bug in the program', () => {
