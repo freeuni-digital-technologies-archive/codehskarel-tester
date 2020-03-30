@@ -92,7 +92,15 @@ const World = class {
     constructor(opts) {
         this.width = opts.width || 10
         this.height = opts.height || 10
-        this.beepers = opts.beepers || []
+        if (opts.beepers && opts.beepers.length) {
+            if (opts.beepers[0].set) {
+                this.beepers = opts.beepers
+            } else {
+                this.beepers = opts.beepers.map(C.fromArray)
+            }
+        } else {
+            this.beepers = []
+        }
         this.walls = opts.walls || []
         const corners = Wall.corners(this.width, this.height)
         const horizontalEdges = [
@@ -152,7 +160,11 @@ module.exports.Karel = class {
     constructor(opts) {
         this.world = opts.world || new World({})// default
         this.direction = opts.direction || 0
-        this.position = opts.position || new C(1, 1)
+        if (opts.position) {
+            this.position = opts.position.set ? opts.position : C.fromArray(opts.position)
+        } else {
+            this.position = new C(1, 1)
+        }
     }
     setPosition(x, y) {
         this.position.set(x, y)
