@@ -78,31 +78,9 @@ const Wall = class {
             topRight: [width + 1, height + 1]
         }
     }
-}
 
-// starting from east, counter clockwise
-const Directions = [
-    [1, 0], // east
-    [0, 1], // north
-    [-1, 0], // west
-    [0, -1], // south
-]
-
-const World = class {
-    constructor(opts) {
-        this.width = opts.width || 10
-        this.height = opts.height || 10
-        if (opts.beepers && opts.beepers.length) {
-            if (opts.beepers[0].set) {
-                this.beepers = opts.beepers
-            } else {
-                this.beepers = opts.beepers.map(C.fromArray)
-            }
-        } else {
-            this.beepers = []
-        }
-        this.walls = opts.walls || []
-        const corners = Wall.corners(this.width, this.height)
+    static borders(width, height) {
+        const corners = Wall.corners(width, height)
         const horizontalEdges = [
             [corners.lowerLeft, corners.lowerRight],
             [corners.topLeft, corners.topRight],
@@ -119,9 +97,36 @@ const World = class {
             .map(pair => pair.map(C.fromArray))
             .map(pair => Wall.verticalLine(...pair))
             .flat()
-        this.walls = this.walls
-            .concat(horizontalWalls)
+        return horizontalWalls
             .concat(verticalWalls)
+    }
+}
+
+// starting from east, counter clockwise
+const Directions = [
+    [1, 0], // east
+    [0, 1], // north
+    [-1, 0], // west
+    [0, -1], // south
+]
+
+const World = class {
+    constructor(opts) {
+        this.width = opts.width || 10
+        this.height = opts.height || 10
+        this.walls = opts.walls || []
+        const borders = Wall.borders(this.width, this.height)
+        this.walls = this.walls
+            .concat(borders)
+        if (opts.beepers && opts.beepers.length) {
+            if (opts.beepers[0].set) {
+                this.beepers = opts.beepers
+            } else {
+                this.beepers = opts.beepers.map(C.fromArray)
+            }
+        } else {
+            this.beepers = []
+        }
     }
 
     addBeepers(indices) {
