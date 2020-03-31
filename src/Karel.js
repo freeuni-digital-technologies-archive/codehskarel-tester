@@ -71,34 +71,29 @@ const Wall = class {
     }
 
     static corners(width, height) {
-        return {
-            lowerLeft: [1, 1],
-            lowerRight: [width + 1, 1],
-            topLeft: [1, height + 1],
-            topRight: [width + 1, height + 1]
+        return [
+            [1, 1], // lowerLeft
+            [width + 1, 1], // lowerRight
+            [1, height + 1], // topLeft
+            [width + 1, height + 1] // topRight
+        ]
+    }
+
+    static line(p1, p2) {
+        if (p1.x == p2.x) {
+            return Wall.verticalLine(p1, p2)
+        } else if (p1.y == p2.y) {
+            return Wall.horizontalLine(p1, p2)
         }
+        return []
     }
 
     static borders(width, height) {
-        const corners = Wall.corners(width, height)
-        const horizontalEdges = [
-            [corners.lowerLeft, corners.lowerRight],
-            [corners.topLeft, corners.topRight],
-        ]
-        const verticalEdges = [
-            [corners.lowerLeft, corners.topLeft],
-            [corners.lowerRight, corners.topRight]
-        ]
-        const horizontalWalls = horizontalEdges
-            .map(pair => pair.map(C.fromArray))
-            .map(pair => Wall.horizontalLine(...pair))
+        const corners = this.corners(width, height).map(C.fromArray)
+        return corners
+            .map(p1 => corners.map(p2 => this.line(p1, p2)))
             .flat()
-        const verticalWalls = verticalEdges
-            .map(pair => pair.map(C.fromArray))
-            .map(pair => Wall.verticalLine(...pair))
             .flat()
-        return horizontalWalls
-            .concat(verticalWalls)
     }
 }
 
