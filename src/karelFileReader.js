@@ -28,6 +28,7 @@ module.exports.setUpSubmission = (fileName, config = {}) => {
     submission.__set__('turnLeft', () => karel.turnLeft())
     submission.__set__('pickBeeper', () => karel.pickBeeper())
     submission.__set__('putBeeper', () => karel.putBeeper())
+    submission.__set__('frontIsClear', () => karel.frontIsClear())
     return {
         main: main,
         karel: karel,

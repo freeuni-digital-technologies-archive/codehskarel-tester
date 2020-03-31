@@ -71,17 +71,37 @@ describe('walls', () => {
         karel.move()
         karel.move()
         expect(() => karel.move()).to.throw("there is a wall in front of Karel")
-        expect(karel.position).eql(new C(3,1))
+        expect(karel.position).eql(new C(3, 1))
     })
     it('another check for vertical walls', () => {
         karel.turnLeft()
         karel.move()
         karel.move()
-        expect(karel.position).eql(new C(3,3))
+        expect(karel.position).eql(new C(3, 3))
         expect(() => karel.move()).to.throw("there is a wall in front of Karel")
     })
     it('walls can be within the world as well', () => {
-        world.addWall(new Wall(new C(3,3), new C(2, 3)))
+        world.addWall(new Wall(new C(3, 3), new C(2, 3)))
+        karel.turnLeft()
+        expect(() => karel.move()).to.throw("there is a wall in front of Karel")
+    })
+})
+
+describe('walls from array', () => {
+    const karel = new Karel({
+        world: {
+            width: 3,
+            height: 3,
+            walls: [
+                [[1, 1], [1, 2]],
+                [[1, 1], [2, 1]]
+            ]
+        }
+    })
+    it('check first wall', () => {
+        expect(() => karel.move()).to.throw("there is a wall in front of Karel")
+    })
+    it('check second wall', () => {
         karel.turnLeft()
         expect(() => karel.move()).to.throw("there is a wall in front of Karel")
     })

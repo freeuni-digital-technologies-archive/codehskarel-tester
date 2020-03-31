@@ -109,7 +109,16 @@ const World = class {
     constructor(opts) {
         this.width = opts.width || 10
         this.height = opts.height || 10
-        this.walls = opts.walls || []
+        this.walls = []
+        const walls = opts.walls || []
+        walls.forEach(wall => {
+            if (wall.first && wall.second) {
+                this.walls.push(wall)
+            } else {
+                const [ first, second ] = wall.map(C.fromArray)
+                this.walls.push(new Wall(first, second))
+            }
+        })
         const borders = Wall.borders(this.width, this.height)
         this.walls = this.walls
             .concat(borders)
@@ -158,7 +167,15 @@ module.exports.World = World
 module.exports.Wall = Wall
 module.exports.Karel = class {
     constructor(opts) {
-        this.world = opts.world || new World({})// default
+        if (opts.world) {
+            if (opts.world.existsWall) {
+                this.world = opts.world
+            } else {
+                this.world = new World(opts.world)
+            }
+        } else {
+            this.world = new World({})
+        }
         this.direction = opts.direction || 0
         if (opts.position) {
             this.position = opts.position.set ? opts.position : C.fromArray(opts.position)
@@ -175,10 +192,10 @@ module.exports.Karel = class {
     }
     move() {
         const direction = Directions[this.direction]
-        if (this.world.existsWall(this.position, this.nextCorner(direction))) {
-            throw "there is a wall in front of Karel"
-        } else {
+        if (this.frontIsClear()) {
             this.position.move(...direction)
+        } else {
+            throw "there is a wall in front of Karel"
         }
     }
     nextCorner(direction) {
@@ -192,5 +209,9 @@ module.exports.Karel = class {
     }
     toString() {
         return `Karel is on position ${this.position}, coordinates of beepers: ${this.world.beepers}`
+    }
+    frontIsClear() {
+        const direction = Directions[this.direction]
+        return !this.world.existsWall(this.position, this.nextCorner(direction))
     }
 }
