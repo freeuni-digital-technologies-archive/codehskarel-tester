@@ -1,3 +1,9 @@
+function return() {
+    repeat(3) {
+        putBeeper()
+    }
+}
+
 function main() {
     repeat(2) {
         move()
@@ -7,7 +13,5 @@ function main() {
         move()
     }
     turnLeft()
-    repeat(3) {
-        putBeeper()
-    }
+    return()
 }
