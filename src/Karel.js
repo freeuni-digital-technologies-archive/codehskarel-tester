@@ -146,12 +146,16 @@ const World = class {
     }
 
     removeBeeper(c) {
-        const index = this.beepers.map(x => x.equal(c)).indexOf(true)
+        const index = this.beepersPresent(c) 
         if (index > -1) {
             this.beepers.splice(index, 1)
         } else {
             throw "no beepers on this corner"
         }
+    }
+
+    beepersPresent(c) {
+        return this.beepers.map(x => x.equal(c)).indexOf(true)
     }
 
     existsWall(first, second) {
@@ -187,8 +191,11 @@ module.exports.Karel = class {
         this.position.set(x, y)
         return this
     }
+    leftDirection() {
+        return (this.direction + 1) % (Directions.length)
+    }
     turnLeft() {
-        this.direction = (this.direction + 1) % (Directions.length)
+        this.direction = this.leftDirection()
     }
     move() {
         const direction = Directions[this.direction]
@@ -210,8 +217,20 @@ module.exports.Karel = class {
     toString() {
         return `Karel is on position ${this.position}, coordinates of beepers: ${this.world.beepers}`
     }
-    frontIsClear() {
-        const direction = Directions[this.direction]
+    frontIsClear(directionIndex = this.direction) {
+        const direction = Directions[directionIndex]
         return !this.world.existsWall(this.position, this.nextCorner(direction))
+    }
+    beepersPresent() {
+        return this.world.beepersPresent(this.position) > -1
+    }
+    noBeepersPresent() {
+        return !this.beepersPresent()
+    }
+    frontIsBlocked() {
+        return !this.frontIsClear()
+    }
+    leftIsClear() {
+        return this.frontIsClear(this.leftDirection())
     }
 }

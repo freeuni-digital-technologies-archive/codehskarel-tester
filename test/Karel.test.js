@@ -20,6 +20,13 @@ describe('karel movement', () => {
     it('position change', () => {
         expect(karel.setPosition(4, 5).position).eql(new C(4, 5))
     })
+
+    it('direction change', () => {
+        karel.direction = 0
+        karel.setPosition(1, 1)
+        karel.turnLeft()
+        expect(karel.leftIsClear()).be.false
+    })
 })
 
 describe('beepers', () => {
