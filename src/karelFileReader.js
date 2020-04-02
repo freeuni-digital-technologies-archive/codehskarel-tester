@@ -1,6 +1,6 @@
 // https://stackoverflow.com/questions/14874208/how-to-access-and-test-an-internal-non-exports-function-in-a-node-js-module
 const rewire = require('rewire')
-const Karel = require('js-karel')
+const Karel = require('jskarel')
 const fs = require('fs')
 
 const customStuctures = [
