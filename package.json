@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
+    "js-karel": "../js-karel",
     "mocha": "^7.1.1",
     "nodemon": "^2.0.2",
     "nyc": "^15.0.0",

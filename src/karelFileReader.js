@@ -1,6 +1,6 @@
 // https://stackoverflow.com/questions/14874208/how-to-access-and-test-an-internal-non-exports-function-in-a-node-js-module
 const rewire = require('rewire')
-const { Karel, World, C } = require('./Karel')
+const Karel = require('js-karel')
 const fs = require('fs')
 
 const customStuctures = [
@@ -35,7 +35,7 @@ function replaceCustomStructures(fileName) {
 module.exports.setUpSubmission = (fileName, config = {}) => {
     const newFile = replaceCustomStructures(fileName)
     const submission = rewire(newFile)
-    const world = new World(config.world || {})
+    const world = config.world || {}
     const karelConfig = config.karel || {}
     karelConfig.world = world
     const karel = new Karel(karelConfig)
