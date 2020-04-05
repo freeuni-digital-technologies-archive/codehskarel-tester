@@ -18,10 +18,12 @@ function getFileReaderError(err: any): Result {
         message: "there is a problem with the file",
         details: ''
     }
-    const errLine = err.stack.split('\n')[0]
+    const errLine = err.message.split('\n')[0]
     const lineNumber = errLine.split(':')[1]
     if (err.name == "SyntaxError") {
         result.details = `error reading the file on line ${lineNumber}`
+    } else if (err.name == 'ReferenceError' && err.message.includes('main is not defined')) {
+        result.details = `could not find function main() {} in the file.`
     } else {
         result.details = `Unknown error occured: ${errLine}, ${err.message}`
     }
