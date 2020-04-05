@@ -1,26 +1,27 @@
 // https://stackoverflow.com/questions/14874208/how-to-access-and-test-an-internal-non-exports-function-in-a-node-js-module
-const rewire = require('rewire')
-const Karel = require('jskarel')
-const fs = require('fs')
+import rewire from 'rewire'
+import { Karel } from 'jskarel'
+import fs from 'fs'
+import { Config } from './karelTester'
 
 const customStuctures = [
     {
         regex: /repeat\s*\((\s*[\d|\w]+\s*)\)/g,
-        replace: (match) => `for (let i=0; i < ${match[1]}; i++)`
+        replace: (match: RegExpMatchArray) => `for (let i=0; i < ${match[1]}; i++)`
     },
     {
         regex: /return\(\)/g,
-        replace: match => `repeatFunction()`
+        replace: (match: RegExpMatchArray) => `repeatFunction()`
     }
 ]
-function replaceCustomStructures(fileName) {
+function replaceCustomStructures(fileName: string) {
     let contents = fs.readFileSync(fileName, 'utf8')
     const newFile = fileName + '.fixed'
     const replaced = customStuctures.map(structure => {
         const regex = structure.regex
         if (contents.match(regex) == null)
             return false
-        const matches = [...contents.matchAll(regex)]
+        const matches = [...contents['matchAll'](regex)]
         matches.forEach(match => {
             const replacement = structure.replace(match)
             contents = contents.replace(match[0], replacement)
@@ -32,7 +33,7 @@ function replaceCustomStructures(fileName) {
     fs.writeFileSync(newFile, contents)
     return newFile
 }
-module.exports.setUpSubmission = (fileName, config = {}) => {
+export function setUpSubmission(fileName: string, config: Config = {}) {
     const newFile = replaceCustomStructures(fileName)
     const submission = rewire(newFile)
     const world = config.world || {}

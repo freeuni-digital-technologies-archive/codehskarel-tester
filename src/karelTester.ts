@@ -1,9 +1,22 @@
 const fileReader = require('./karelFileReader')
 
-function getFileReaderError(err) {
-    const result = {
+export interface Result {
+    passed?: boolean
+    error?: boolean
+    details: string
+    message: string
+}
+
+export interface Config {
+    karel?: any
+    world?: any
+}
+
+function getFileReaderError(err: any): Result {
+    const result: Result = {
         error: true,
         message: "there is a problem with the file",
+        details: ''
     }
     const errLine = err.stack.split('\n')[0]
     const lineNumber = errLine.split(':')[1]
@@ -15,14 +28,16 @@ function getFileReaderError(err) {
     return result
 }
 
-module.exports.KarelTester = class {
-    constructor(testFile) {
+export class KarelTester {
+    private config: Config
+    private assertions: any[]
+    constructor(testFile: string) {
         const { config, assertions } = require(testFile)
         this.config = config
         this.assertions = assertions
     }
 
-    testSubmission(submissionFile) {
+    testSubmission(submissionFile: string) {
         const results = []
         try {
             const { main, karel, world } = fileReader.setUpSubmission(submissionFile, this.config)
