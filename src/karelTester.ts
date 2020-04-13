@@ -1,9 +1,9 @@
-const fileReader = require('./karelFileReader')
+import * as fileReader from './karelFileReader'
 
 export interface Result {
     passed?: boolean
     error?: boolean
-    details: string
+    details?: string
     message: string
 }
 
@@ -31,47 +31,50 @@ function getFileReaderError(err: any): Result {
 }
 
 export class KarelTester {
-    private config: Config
+    private config: Config[]
     private assertions: any[]
     constructor(testFile: string) {
         const { config, assertions } = require(testFile)
-        this.config = config
+        this.config = config.length ? config : [config]
         this.assertions = assertions
     }
 
     testSubmission(submissionFile: string) {
-        const results = []
-        try {
-            const { main, karel, world } = fileReader.setUpSubmission(submissionFile, this.config)
+        const results: Result[] = []
+        this.config.forEach(config => {
             try {
-                main()
-                this.assertions.map(assertion => {
-                    try {
-                        const res = assertion(karel).__flags
-                        const result = {
-                            passed: true,
-                            message: res.message
+                const { main, karel } = fileReader.setUpSubmission(submissionFile, config)
+                try {
+                    main()
+                    this.assertions.map(assertion => {
+                        try {
+                            const res = assertion(karel).__flags
+                            const result = {
+                                passed: true,
+                                message: res.message
+                            }
+                            results.push(result)
+                        } catch (err) {
+                            const result = {
+                                passed: false,
+                                message: err.message
+                            }
+                            results.push(result)
                         }
-                        results.push(result)
-                    } catch (err) {
-                        const result = {
-                            passed: false,
-                            message: err.message
-                        }
-                        results.push(result)
-                    } 
-                })
-            } catch (err) {
-                const result = {
-                    error: true,
-                    message: "there is a bug in the program",
-                    details: `${err}, ${karel}`,
+                    })
+                } catch (err) {
+                    const result = {
+                        error: true,
+                        message: "there is a bug in the program",
+                        details: `${err}, ${karel}`,
+                    }
+                    results.push(result)
                 }
-                results.push(result)
+            } catch (err) {
+                results.push(getFileReaderError(err))
             }
-        } catch (err) {
-            results.push(getFileReaderError(err))
-        }
+
+        })
         return results
     }
 }

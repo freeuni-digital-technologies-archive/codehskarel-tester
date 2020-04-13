@@ -11,7 +11,7 @@ const customStuctures = [
     },
     {
         regex: /return\(\)/g,
-        replace: (match: RegExpMatchArray) => `repeatFunction()`
+        replace: () => `repeatFunction()`
     }
 ]
 function replaceCustomStructures(fileName: string) {
@@ -49,7 +49,15 @@ export function setUpSubmission(fileName: string, config: Config = {}) {
     submission.__set__('beepersPresent', () => karel.beepersPresent())
     submission.__set__('noBeepersPresent', () => karel.noBeepersPresent())
     submission.__set__('frontIsBlocked', () => karel.frontIsBlocked())
+    submission.__set__('facingEast', () => karel.facingEast())
+    submission.__set__('facingWest', () => karel.facingWest())
+    submission.__set__('facingNorth', () => karel.facingNorth())
+    submission.__set__('facingSouth', () => karel.facingSouth())
     submission.__set__('leftIsClear', () => karel.leftIsClear())
+    submission.__set__('leftIsBlocked', () => !karel.leftIsClear())
+    submission.__set__('rightIsClear', () => karel.rightIsClear())
+    submission.__set__('rightIsBlocked', () => !karel.rightIsClear())
+    
     return {
         main: main,
         karel: karel,
