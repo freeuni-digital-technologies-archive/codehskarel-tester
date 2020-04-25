@@ -12,6 +12,10 @@ const customStuctures = [
     {
         regex: /return\(\)/g,
         replace: () => `repeatFunction()`
+    },
+    {
+        regex: /switch\(\)/g,
+        replace: () => `switchFunction()`
     }
 ]
 function replaceCustomStructures(fileName: string) {
