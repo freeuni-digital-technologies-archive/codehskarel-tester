@@ -2,5 +2,7 @@
 
 **/
 
-move()
-move(
+functio start() {
+    move()
+    move(
+}

@@ -21,14 +21,14 @@ const customStuctures = [
 function replaceCustomStructures(fileName: string) {
     let contents = fs.readFileSync(fileName, 'utf8')
     const newFile = fileName + '.fixed'
-    let functionsStart = contents.indexOf('\nfunction')
-    if (functionsStart < 0) functionsStart = contents.length
-    const commands = contents.substr(0, functionsStart)
-    contents = `function main() {
-        ${commands}
-    }
-    ${contents.substr(functionsStart, contents.length)}
-    `
+    // let functionsStart = contents.indexOf('\nfunction')
+    // if (functionsStart < 0) functionsStart = contents.length
+    // const commands = contents.substr(0, functionsStart)
+    // contents = `function main() {
+    //     ${commands}
+    // }
+    // ${contents.substr(functionsStart, contents.length)}
+    // `
     const replaced = customStuctures.map(structure => {
         const regex = structure.regex
         if (contents.match(regex) == null)
@@ -51,7 +51,7 @@ export function setUpSubmission(fileName: string, config: Config = {}) {
     const karelConfig = config.karel || {}
     karelConfig.world = world
     const karel = new Karel(karelConfig)
-    const main = submission.__get__('main')
+    const main = submission.__get__('start')
     submission.__set__('move', () => karel.move())
     submission.__set__('turnLeft', () => karel.turnLeft())
     submission.__set__('takeBall', () => karel.pickBeeper())

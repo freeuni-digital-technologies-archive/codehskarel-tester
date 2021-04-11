@@ -2,5 +2,7 @@
 
 **/
 
-move()
-move()
+function start() {
+	move()
+	move()
+}

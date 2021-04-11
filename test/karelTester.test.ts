@@ -32,7 +32,7 @@ describe('integration test case', () => {
 })
 
 // TODO: not working
-describe.skip('buggy program', () => {
+describe('buggy program', () => {
     const testFile = `${path}/buggyTest.js`
     const tester = new KarelTester(testFile)
     it('should handle bugs in the program', () => {
