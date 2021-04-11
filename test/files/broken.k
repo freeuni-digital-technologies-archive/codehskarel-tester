@@ -2,7 +2,5 @@
 
 **/
 
-functio main() {
-    move()
-    move(
-}
+move()
+move(
