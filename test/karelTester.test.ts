@@ -19,6 +19,22 @@ describe('simple test case', () => {
     })
 })
 
+
+describe('superkarel test case', () => {
+    const testFile = `${path}/superTest.js`
+    const tester = new KarelTester(testFile)
+    it('test should run and pass', () => {
+        const [result] = tester.testSubmission(`${path}/super.k`)
+        expect(result.passed).be.true
+        expect(result.message).eql("karel should go to 1x2")
+    })
+    it('in case of a broken file it should report', () => {
+        const [result] = tester.testSubmission(`${path}/broken.k`)
+        expect(result.error).be.true
+        expect(result.message).eql("there is a problem with the file")
+    })
+})
+
 describe('integration test case', () => {
     const testFile = `${path}/integrationTest.js`
     const tester = new KarelTester(testFile)

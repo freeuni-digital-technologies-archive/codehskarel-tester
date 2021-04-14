@@ -73,6 +73,10 @@ export function setUpSubmission(fileName: string, config: Config = {}) {
     submission.__set__('rightIsClear', () => karel.rightIsClear())
     submission.__set__('rightIsBlocked', () => !karel.rightIsClear())
     
+	 // codehs SuperKarel
+    submission.__set__('turnRight', () => karel.turnRight())
+    submission.__set__('turnAround', () => karel.turnAround())
+
     return {
         main: main,
         karel: karel,
